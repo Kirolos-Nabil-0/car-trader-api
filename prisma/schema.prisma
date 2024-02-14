@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String    @id @default(uuid())
+  username String
+  password String
+  cars     Car[]
+  rule     String    @default("user")
+  messages Message[]
+
+  @@unique([username])
+}
+
+model Make {
+  id   String @id @default(uuid())
+  name String
+  cars Car[]
+}
+
+model Region {
+  id   String @id @default(uuid())
+  name String
+  cars Car[]
+}
+
+model Image {
+  id   String @id @default(uuid())
+  url  String
+  cars Car[]
+}
+
+model Car {
+  id          String    @id @default(uuid())
+  name        String
+  image       Image     @relation(fields: [imageId], references: [id])
+  makeId      String
+  regionId    String
+  userId      String
+  price       Int       @default(0)
+  description String?   @default("")
+  user        User      @relation(fields: [userId], references: [id])
+  region      Region    @relation(fields: [regionId], references: [id])
+  make        Make      @relation(fields: [makeId], references: [id])
+  Message     Message[]
+  imageId     String
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  senderId  String
+  carId     String
+  name      String
+  message   String
+  phone     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  sender    User     @relation(fields: [senderId], references: [id])
+  car       Car      @relation(fields: [carId], references: [id])
+}

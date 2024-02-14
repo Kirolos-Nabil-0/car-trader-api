@@ -29,19 +29,17 @@ app.use(
   "/uploads",
   express.static(path.join(__dirname, "uploads").substring(1))
 );
-app.use(
-  express.static(path.join(__dirname, "../../olx-vue/dist").substring(1))
-);
+// app.use(
+//   express.static(path.join(__dirname, "../../olx-vue/dist").substring(1))
+// );
 
 // Routes
 app.use("/api", router);
 
-// Catch-all route for serving the 'index.html' file
-app.get("*", (req, res) => {
-  const indexPath = path
-    .join(__dirname, "../../olx-vue/dist/index.html")
-    .substring(1);
-  res.sendFile(indexPath);
-});
+// // Catch-all route for serving the 'index.html' file
+// app.get("*", (req, res) => {
+//   const indexPath = path.resolve(__dirname, "../../olx-vue/dist/index.html");
+//   res.sendFile(indexPath);
+// });
 
 export default app;

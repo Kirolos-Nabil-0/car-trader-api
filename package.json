@@ -9,7 +9,7 @@
     "dev": "nodemon index.js  ",
     "start": "node index.js",
     "prisma": "npx prisma",
-    "migrate": "npx prisma migrate dev --name init",
+    "migrate": "npx prisma migrate deploy  --name init",
     "build": "tsc"
   },
   "keywords": [],
